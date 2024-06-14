@@ -23,14 +23,6 @@ jobs:
     - name: Install Node.js dependencies
       run: npm install
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12'
-
-    - name: Install pipreqs
-      run: pip3 install pipreqs
-
     - name: Update requirements.txt
       run: pipreqs . --force
 
