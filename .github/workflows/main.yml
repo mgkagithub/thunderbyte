@@ -23,6 +23,13 @@ jobs:
     - name: Install Node.js dependencies
       run: npm install
 
+    - name: Set up Python virtual environment
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install pipreqs
+
     - name: Update requirements.txt
       run: |
         source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
@@ -42,8 +49,13 @@ jobs:
       run: |
         source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
         if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found."; fi
-
-
+    - name: Run tests
+      run: |
+        npm test
+        source venv/bin/activate
+        python -m unittest discover
+    - name: Build the project
+      run: npm run build
 
 
 
