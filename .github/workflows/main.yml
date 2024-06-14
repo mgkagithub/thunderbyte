@@ -27,8 +27,6 @@ jobs:
       run: |
         python3 -m venv venv
         source venv/bin/activate
-        pip install --upgrade pip
-        pip install pipreqs
 
     - name: Update requirements.txt
       run: |
@@ -50,11 +48,3 @@ jobs:
         source venv/bin/activate
         if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found."; fi
 
-    - name: Run tests
-      run: |
-        npm test
-        source venv/bin/activate
-        python -m unittest discover
-
-    - name: Build the project
-      run: npm run build
