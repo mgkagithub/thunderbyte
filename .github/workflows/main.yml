@@ -32,7 +32,7 @@ jobs:
 
     - name: Update requirements.txt
       run: |
-        source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
+        source venv/bin/activate
         pipreqs . --force
 
     - name: Commit and push updated requirements.txt
