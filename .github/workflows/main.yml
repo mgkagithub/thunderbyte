@@ -49,11 +49,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{secrets.PAT_TOKEN}}
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
+        git remote set-url origin https://mgkagithub:${{secrets.PAT_TOKEN}}@github.com/mgkagithub/thunderbyte.git
         git add requirements.txt || echo "No changes to commit."
         git commit -m 'Update requirements.txt' || echo "Nothing to commit."
-        git push https://x-access-token:${{secrets.PAT_TOKEN}}@github.com/mgkagithub/thunderbyte.git || echo "Nothing to push."
+        git push origin main || echo "Nothing to push."
 
     - name: Install Python dependencies
       run: |

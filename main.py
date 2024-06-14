@@ -1,6 +1,6 @@
 import runpy
 import datetime
-
+print("starting file...")
 while True:
     try:
         file_globals = runpy.run_path("gass.py")
