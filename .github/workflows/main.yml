@@ -37,31 +37,24 @@ jobs:
 
     - name: Commit and push updated requirements.txt
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add requirements.txt || echo "No changes to commit."
         git commit -m 'Update requirements.txt' || echo "Nothing to commit."
-        git push origin main || echo "Nothing to push."
+        git push https://${{ secrets.PAT_TOKEN }}@github.com/mgkagithub/thunderbyte.git || echo "Nothing to push."
 
     - name: Install Python dependencies
       run: |
-        source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
+        source venv/bin/activate
         if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found."; fi
+
     - name: Run tests
       run: |
         npm test
         source venv/bin/activate
         python -m unittest discover
+
     - name: Build the project
       run: npm run build
-
-
-
-
-
-
-
-
-  
