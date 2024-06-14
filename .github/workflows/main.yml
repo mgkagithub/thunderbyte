@@ -24,22 +24,25 @@ jobs:
       run: npm install
 
     - name: Update requirements.txt
-      run: pipreqs . --force
+      run: |
+        source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
+        pipreqs . --force
 
     - name: Commit and push updated requirements.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add requirements.txt
-        git commit -m 'Update requirements.txt'
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git add requirements.txt || echo "No changes to commit."
+        git commit -m 'Update requirements.txt' || echo "Nothing to commit."
+        git push origin main || echo "Nothing to push."
 
     - name: Install Python dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip3 install -r requirements.txt
+        source /home/mg/actions-runner/_work/thunderbyte/thunderbyte/bin/activate
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found."; fi
+
 
 
 
